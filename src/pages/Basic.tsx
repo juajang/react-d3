@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import styled from "styled-components";
 import RandomCircles from "../components/basic/RandomCircles";
 import {Divider} from "antd";
+import Mark from "../components/common/Mark";
 
 const Wrapper = styled.div`
   display: grid;
@@ -10,7 +11,7 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bolder;
   margin: 2rem 0;
 `;
@@ -66,6 +67,10 @@ const Basic = () => {
       <svg ref={refCoordinate} id="circles-area" height="200" width="450"/>
       <Divider/>
       <Title> Random circles using .join() method </Title>
+      <p>
+        We're re-running our code whenever <Mark> dataset changes </Mark> <br/>
+        Use <Mark> useInterval </Mark> to re-calculate our <Mark> dataset </Mark>
+      </p>
       <RandomCircles/>
       <Divider/>
     </Wrapper>

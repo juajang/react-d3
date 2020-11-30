@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.css";
 import 'antd/dist/antd.css';
+import "./index.css";
 
 import Basic from "./pages/Basic";
 import Header from "./components/common/Header";

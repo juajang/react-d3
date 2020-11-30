@@ -15,3 +15,8 @@ code {
 main {
   padding: 5rem;
 }
+
+p {
+  font-size: 18px;
+  text-align: center;
+}
