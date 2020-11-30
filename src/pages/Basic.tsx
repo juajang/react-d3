@@ -1,9 +1,12 @@
-import React, {useEffect, useRef} from 'react'
+import React, { useEffect, useRef } from 'react'
 import * as d3 from "d3";
 import styled from "styled-components";
-import RandomCircles from "../components/basic/RandomCircles";
-import {Divider} from "antd";
+import { Divider } from "antd";
+
+//components
 import Mark from "../components/common/Mark";
+import RandomCirclesUsingReact from "../components/basic/RandomCircleUsingReact";
+import RandomCircles from "../components/basic/RandomCircles";
 
 const Wrapper = styled.div`
   display: grid;
@@ -72,6 +75,12 @@ const Basic = () => {
         Use <Mark> useInterval </Mark> to re-calculate our <Mark> dataset </Mark>
       </p>
       <RandomCircles/>
+      <Title> Random circles using React </Title>
+      <p>
+        Looping over each data point, and <br/>
+        rendering a <Mark> circle </Mark> at <Mark> [x, y] </Mark>
+      </p>
+      <RandomCirclesUsingReact/>
       <Divider/>
     </Wrapper>
   );
