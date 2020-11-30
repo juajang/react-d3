@@ -19,14 +19,12 @@ const RandomCirclesUsingReact = () => {
   return (
     <svg viewBox = "0 0 100 50" >
       {dataset.map(([x, y], i) => (
-        <>
-        <span> {i}</span>
         <circle
+          key={i}
           cx={x}
           cy={y}
           r="3"
        />
-        </>
       ))}
     </svg>
   );

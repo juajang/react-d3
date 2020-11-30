@@ -2,11 +2,13 @@ import React, { useEffect, useRef } from 'react'
 import * as d3 from "d3";
 import styled from "styled-components";
 import { Divider } from "antd";
+import { lineData } from "../data/LineData";
 
 //components
 import Mark from "../components/common/Mark";
 import RandomCirclesUsingReact from "../components/basic/RandomCircleUsingReact";
 import RandomCircles from "../components/basic/RandomCircles";
+import LineChart from "./LineChart";
 
 const Wrapper = styled.div`
   display: grid;
@@ -75,6 +77,7 @@ const Basic = () => {
         Use <Mark> useInterval </Mark> to re-calculate our <Mark> dataset </Mark>
       </p>
       <RandomCircles/>
+      <Divider/>
       <Title> Random circles using React </Title>
       <p>
         Looping over each data point, and <br/>

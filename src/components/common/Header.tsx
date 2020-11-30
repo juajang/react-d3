@@ -12,11 +12,20 @@ const Wrapper = styled.header`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  margin: 1rem auto;
+  justify-content: space-around;
+`;
+
 const Header = () => {
   return (
     <Wrapper>
       <h1> Learning D3 with React </h1>
-      <LinkButton name="Basic" url="/basic"/>
+      <ButtonContainer>
+        <LinkButton name="Basic" url="/basic"/>
+        <LinkButton name="Line Chart" url="/line-chart"/>
+      </ButtonContainer>
     </Wrapper>
   );
 };

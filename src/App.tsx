@@ -4,8 +4,13 @@ import "./App.css";
 import 'antd/dist/antd.css';
 import "./index.css";
 
+// data
+import { lineData } from "./data/LineData";
+
+// components
 import Basic from "./pages/Basic";
 import Header from "./components/common/Header";
+import LineChart from "./pages/LineChart";
 
 function App() {
   return (
@@ -14,7 +19,12 @@ function App() {
         <Header/>
         <main>
           <Switch>
-            <Route path="/basic" component={Basic}/>
+            <Route path="/basic">
+              <Basic/>
+            </Route>
+            <Route path="/line-chart">
+              <LineChart height={400} values={lineData}/>
+            </Route>
           </Switch>
         </main>
       </div>
