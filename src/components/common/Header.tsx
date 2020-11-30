@@ -15,8 +15,8 @@ const Wrapper = styled.header`
 const Header = () => {
   return (
     <Wrapper>
-      <h1> React with D3 </h1>
-      <LinkButton name="BarChart" url="/bar-chart"/>
+      <h1> Learning D3 with React </h1>
+      <LinkButton name="Basic" url="/basic"/>
     </Wrapper>
   );
 };
