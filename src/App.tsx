@@ -10,7 +10,7 @@ import { lineData } from "./data/LineData";
 // components
 import Basic from "./pages/Basic";
 import Header from "./components/common/Header";
-import LineChart from "./pages/LineChart";
+import LineChart from "./pages/LineChartJs";
 
 function App() {
   return (
