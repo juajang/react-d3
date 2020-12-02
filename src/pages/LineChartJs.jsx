@@ -16,24 +16,19 @@ const LineChart = (props) => {
     const height = graphHeight;
 
     const documentElement = d3.select(currentElement)
-      .call(g => console.log(g.select("svg")))
-      .append('svg')
-      .attr('viewBox', `0,0,${width},${height}`);
+        .call(g => g.select("svg").remove())
+        .append('svg')
+        .attr('viewBox', `0,0,${width},${height}`);
 
     const parseDate = d3.timeParse("%Y-%m-%d");
 
     const d3Type = d3.line()
-      // @ts-ignore
       .defined(d => !isNaN(d.v)) // true, false
-      .defined(function (d, i, data) { console.log(d, i, data)})
-      // @ts-ignore
       .x(d => x(parseDate(d.d)))
-      // @ts-ignore
       .y(d => y(d.v));
 
 
     const x = d3.scaleUtc()
-      // @ts-ignore
       .domain(d3.extent(jsonData, d => parseDate(d.d)))
       .range([margin.left, width - margin.right]);
 
@@ -42,17 +37,19 @@ const LineChart = (props) => {
       .range([height - margin.bottom, margin.top]);
 
     const xAxis = g => g
-      .attr("transform", `translate(0,${height - margin.bottom})`)
-      .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0));
+        .attr("transform", `translate(0,${height - margin.bottom})`)
+        .call(d3.axisBottom(x).ticks(width / 80).tickSizeOuter(0));
 
-    documentElement.append('g').call(xAxis);
+    documentElement.append('g')
+        .call(xAxis);
 
-    // @ts-ignore
     const yAxis = g => g
-      .attr("transform", `translate(${margin.left},0)`)
-      .call(d3.axisLeft(y));
+        .attr("transform", `translate(${margin.left},0)`)
+        .call(d3.axisLeft(y));
 
-    documentElement.append('g').call(yAxis).call(g => g.select(".domain").remove());
+    documentElement.append('g')
+        .call(yAxis)
+        .call(g => g.select(".domain").remove());
 
     documentElement.append('path')
       .datum(jsonData)

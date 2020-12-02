@@ -11,6 +11,7 @@ import { lineData } from "./data/LineData";
 import Basic from "./pages/Basic";
 import Header from "./components/common/Header";
 import LineChart from "./pages/LineChartJs";
+import Basics from './pages/Basics';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
             </Route>
             <Route path="/line-chart">
               <LineChart height={400} values={lineData}/>
+            </Route>
+            <Route path="/basics">
+              <Basics/>
             </Route>
           </Switch>
         </main>
