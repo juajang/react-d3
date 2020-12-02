@@ -2,12 +2,7 @@ import React from "react";
 import { Button } from "antd";
 import { Link } from "react-router-dom";
 
-interface LinkButtonProps {
-  name: string;
-  url: string;
-}
-
-const LinkButton = ({ name, url }: LinkButtonProps) => (
+const LinkButton = ({ name, url }) => (
   <Link to={url}>
     <Button>{name}</Button>
   </Link>
