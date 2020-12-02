@@ -20,8 +20,8 @@ const Title = styled.h2`
 `;
 
 const Basic = () => {
-  const refCircle = useRef<SVGSVGElement>(null);
-  const refCoordinate = useRef<SVGSVGElement>(null);
+  const refCircle = useRef();
+  const refCoordinate = useRef();
 
   useEffect(() => {
     const currentCircle = refCircle.current;

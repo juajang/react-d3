@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import useInterval from "../../hooks/useInterval";
 
-const generateDataset = (length: number) => (
+const generateDataset = (length) => (
   Array(length).fill(0).map(() => ([
     Math.random() * 80 + 10,
     Math.random() * 35 + 10,

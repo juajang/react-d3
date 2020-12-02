@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import useInterval from "../../hooks/useInterval";
 import * as d3 from "d3";
 
-const generateDataset = (length: number) => (
+const generateDataset = (length) => (
  Array(length).fill(0).map(() => ([
    Math.random() * 80 + 10,
    Math.random() * 35 + 10,
@@ -11,7 +11,7 @@ const generateDataset = (length: number) => (
 
 const RandomCircles = () => {
   const [dataset, setDataset] = useState(generateDataset(10));
-  const ref = useRef<SVGSVGElement>(null);
+  const ref = useRef();
 
   useEffect(() => {
     const svgElement = d3.select(ref.current);
