@@ -28,7 +28,6 @@ const LineChart = (props) => {
       .x(d => x(parseDate(d.d)))
       .y(d => y(d.v));
 
-
     const x = d3.scaleUtc()
       .domain(d3.extent(jsonData, d => parseDate(d.d)))
       .range([margin.left, width - margin.right]);

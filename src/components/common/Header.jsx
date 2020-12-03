@@ -31,6 +31,7 @@ const Header = () => {
       <ButtonContainer>
         <LinkButton name="Basic" url="/basic"/>
         <LinkButton name="Line Chart" url="/line-chart"/>
+        <LinkButton name="Bar Chart" url="/bar-chart"/>
       </ButtonContainer>
       <h2> How to use React with D3 </h2>
     <ButtonContainer>

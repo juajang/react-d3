@@ -5,7 +5,7 @@ import 'antd/dist/antd.css';
 import "./index.css";
 
 // data
-import { lineData } from "./data/LineData";
+import { lineData } from "./data/lineData";
 
 // components
 import Basic from "./pages/Basic";
@@ -14,6 +14,7 @@ import LineChart from "./pages/LineChartJs";
 import Basics from './pages/tutorials/Basics';
 import CurvedLineChart from './pages/tutorials/CurvedLineChart';
 import ReactWithD3Basic from './pages/ReactWithD3Basic';
+import BarChart from './pages/BarChart';
 
 function App() {
   return (
@@ -22,21 +23,14 @@ function App() {
         <Header/>
         <main>
           <Switch>
-            <Route path="/basic">
-              <Basic/>
-            </Route>
+            <Route path="/basic" component={Basic}/>
             <Route path="/line-chart">
               <LineChart height={400} values={lineData}/>
             </Route>
-            <Route path="/basics">
-              <Basics/>
-            </Route>
-            <Route path="/curved-line-chart">
-              <CurvedLineChart/>
-            </Route>
-            <Route path="/react-with-d3">
-              <ReactWithD3Basic/>
-            </Route>
+            <Route path="/bar-chart" component={BarChart}/>
+            <Route path="/basics" component={Basics}/>
+            <Route path="/curved-line-chart" component={CurvedLineChart}/>
+            <Route path="/react-with-d3" component={ReactWithD3Basic}/>
           </Switch>
         </main>
       </div>
