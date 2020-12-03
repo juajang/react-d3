@@ -1,6 +1,4 @@
-# Using React with D3
-
-React App 안에서 D3.js를 사용하기 위한 튜토리얼 📉
+# Data visualization using React with D3.js 📈
 
 ## Getting Started
 ```git clone https://github.com/JangJua/react-d3.git```
