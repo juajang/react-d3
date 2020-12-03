@@ -1,6 +1,7 @@
 import React from "react";
 import LinkButton from "./LinkButton";
 import styled from "styled-components";
+import { Divider } from 'antd';
 
 const Wrapper = styled.header`
   display: grid;
@@ -9,6 +10,9 @@ const Wrapper = styled.header`
   h1 {
     font-size: 24px;
     font-weight: bold;
+  }
+  h2 {
+    font-size: 20px;
   }
 `;
 
@@ -22,13 +26,15 @@ const Header = () => {
   return (
     <Wrapper>
       <h1> Learning D3 with React </h1>
+      <Divider/>
+      <h2> The Basics </h2>
       <ButtonContainer>
         <LinkButton name="Basic" url="/basic"/>
         <LinkButton name="Line Chart" url="/line-chart"/>
       </ButtonContainer>
-      <h2> Using React(Hooks) with D3 </h2>
+      <h2> How to use React with D3 </h2>
     <ButtonContainer>
-        <LinkButton name="Basics" url="/basics"/>
+        <LinkButton name="React with D3 Basics" url="/react-with-d3"/>
     </ButtonContainer>
     </Wrapper>
   );

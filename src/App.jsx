@@ -11,7 +11,9 @@ import { lineData } from "./data/LineData";
 import Basic from "./pages/Basic";
 import Header from "./components/common/Header";
 import LineChart from "./pages/LineChartJs";
-import Basics from './pages/Basics';
+import Basics from './pages/tutorials/Basics';
+import CurvedLineChart from './pages/tutorials/CurvedLineChart';
+import ReactWithD3Basic from './pages/ReactWithD3Basic';
 
 function App() {
   return (
@@ -28,6 +30,12 @@ function App() {
             </Route>
             <Route path="/basics">
               <Basics/>
+            </Route>
+            <Route path="/curved-line-chart">
+              <CurvedLineChart/>
+            </Route>
+            <Route path="/react-with-d3">
+              <ReactWithD3Basic/>
             </Route>
           </Switch>
         </main>
