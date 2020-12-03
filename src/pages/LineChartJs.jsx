@@ -3,11 +3,12 @@ import * as d3 from 'd3';
 
 const LineChart = (props) => {
   const ref = useRef();
-  const margin = {top: 20, right: 30, bottom: 30, left: 40};
   const [jsonData, setJsonData] = useState([]);
   const [graphHeight, setGraphData] = useState(0);
 
   useEffect(() => {
+    const margin = {top: 20, right: 30, bottom: 30, left: 40};
+
     setJsonData(props.values);
     setGraphData(props.height);
 
@@ -60,7 +61,7 @@ const LineChart = (props) => {
       .attr('stroke-linecap', 'round')
       .attr('d', d3Type);
 
-  }, [jsonData, graphHeight, props, margin]);
+  }, [jsonData, graphHeight, props]);
 
   return (
     <>
