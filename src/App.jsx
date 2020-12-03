@@ -28,9 +28,10 @@ function App() {
               <LineChart height={400} values={lineData}/>
             </Route>
             <Route path="/bar-chart" component={BarChart}/>
-            <Route path="/basics" component={Basics}/>
             <Route path="/curved-line-chart" component={CurvedLineChart}/>
             <Route path="/react-with-d3" component={ReactWithD3Basic}/>
+            <Route path="/tutorials/basics" component={Basics}/>
+            <Route path="/tutorials/curved-line-chart" component={CurvedLineChart}/>
           </Switch>
         </main>
       </div>
