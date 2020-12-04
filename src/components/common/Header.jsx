@@ -42,6 +42,7 @@ const Header = () => {
         <LinkButton name="Basics" url="/tutorials/basics"/>
         <LinkButton name="Curved Line Chart" url="/tutorials/curved-line-chart"/>
         <LinkButton name="Animated Bar Chart" url="/tutorials/animated-bar-chart"/>
+        <LinkButton name="Interactivity Basic" url="/tutorials/interactivity-basic"/>
       </ButtonContainer>
     </Wrapper>
   );

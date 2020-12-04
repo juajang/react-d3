@@ -21,7 +21,7 @@ const BarChart = () => {
   const yAxisRef = useRef();
 
   const margin = {
-    top: 20, right: 20, bottom: 70, left: 20
+    top: 20, right: 20, bottom: 70, left: 30
   }
   const width = 540;
   const height = 600;
@@ -58,7 +58,7 @@ const BarChart = () => {
         .ticks(10)
 
       d3.select(xAxisRef.current).call(xAxis);
-      d3.select(yAxisRef.current).call(yAxis);
+      d3.select(yAxisRef.current).call(yAxis).attr("transform", `translateX(${margin.left})`)
     };
 
     createBarChart();
