@@ -29,39 +29,39 @@ const BarChart = () => {
   const graphHeight = height - margin.top - margin.bottom;
 
   useEffect(() => {
-   const createBarChart = async () => {
-     const data = await d3.csv(chartData);
+    const createBarChart = async () => {
+      const data = await d3.csv(chartData);
 
-     const y = d3.scaleLinear()
-       .domain([0, d3.max(data, d => parseInt(d.value))])
-       .range([graphHeight, 0])
+      const y = d3.scaleLinear()
+        .domain([0, d3.max(data, d => parseInt(d.value))])
+        .range([graphHeight, 0])
 
-     const x = d3.scaleBand()
-       .domain(data.map(d => d.date))
-       .range([0, 500])
-       .paddingInner(0.2)
-       .paddingOuter(0.2);
+      const x = d3.scaleBand()
+        .domain(data.map(d => d.date))
+        .range([0, 500])
+        .paddingInner(0.2)
+        .paddingOuter(0.2);
 
-     const svg = d3.select(ref.current);
-     svg
-       .selectAll(".bar-rect")
-       .data(data)
-       .join("rect")
-       .attr('class','bar-rect')
-       .attr('width', x.bandwidth)
-       .attr('height', d => graphHeight - y(parseInt(d.value)))
-       .attr('x', d => x(d.date))
-       .attr('y', d => y(d.value))
+      const svg = d3.select(ref.current);
+      svg
+        .selectAll(".bar-rect")
+        .data(data)
+        .join("rect")
+        .attr('class','bar-rect')
+        .attr('width', x.bandwidth)
+        .attr('height', d => graphHeight - y(parseInt(d.value)))
+        .attr('x', d => x(d.date))
+        .attr('y', d => y(d.value))
 
-     const xAxis = d3.axisBottom(x);
-     const yAxis = d3.axisLeft(y)
-       .ticks(10)
+      const xAxis = d3.axisBottom(x);
+      const yAxis = d3.axisLeft(y)
+        .ticks(10)
 
-     d3.select(xAxisRef.current).call(xAxis);
-     d3.select(yAxisRef.current).call(yAxis);
-   };
+      d3.select(xAxisRef.current).call(xAxis);
+      d3.select(yAxisRef.current).call(yAxis);
+    };
 
-   createBarChart();
+    createBarChart();
   }, [])
 
   return (
@@ -78,5 +78,4 @@ const BarChart = () => {
     </>
   );
 };
-
 export default BarChart;

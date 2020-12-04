@@ -15,6 +15,7 @@ import Basics from './pages/tutorials/Basics';
 import CurvedLineChart from './pages/tutorials/CurvedLineChart';
 import ReactWithD3Basic from './pages/ReactWithD3Basic';
 import BarChart from './pages/BarChart';
+import AnimatedBarChart from './pages/tutorials/AnimatedBarChart';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/react-with-d3" component={ReactWithD3Basic}/>
             <Route path="/tutorials/basics" component={Basics}/>
             <Route path="/tutorials/curved-line-chart" component={CurvedLineChart}/>
+            <Route path="/tutorials/animated-bar-chart" component={AnimatedBarChart}/>
           </Switch>
         </main>
       </div>
