@@ -1,61 +1,35 @@
-import React, { useRef, useEffect, useState } from "react";
-import useInterval from '../../hooks/useInterval';
-import * as d3 from "d3";
+import React, { useRef, useEffect } from "react";
+import { animated, useSpring } from 'react-spring';
 
-export const generateCircles = () => {
-  const circles = new Array(5).fill(0);
-  return circles.map((value, index) => {
-    return Math.random() > 0.5 ? index + 1 : 0;
-  })
-};
-
-const AnimatedCircles = () => {
-  const [visibleCircles, setVisibleCircles] = useState(
-    generateCircles()
-  );
-  const ref = useRef();
-
-  useInterval(() => {
-    setVisibleCircles(generateCircles());
-  }, 2000);
+const AnimatedCircle = ({ index, isShowing }) => {
+  const wasShowing = useRef(false);
 
   useEffect(() => {
-    const svgElement = d3.select(ref.current);
-    svgElement
-      .selectAll("circle")
-      .data(visibleCircles, d => d)
-      .join(
-        enter => (
-          enter
-            .append("circle")
-            .attr("cx", d => d * 15 + 10)
-            .attr("cy", 10)
-            .attr("r", 0)
-            .attr("fill", "cornflowerblue")
-          .call(enter => (
-            enter.transition().duration(1200)
-              .attr("cy", 10)
-              .attr("r", 3)
-              .style("opacity", 1)
-          ))
-        ),
-        update => (
-          update.attr("fill", "lightgrey")
-        ),
-        exit => (
-          exit.attr("fill", "tomato")
-            .call(exit => (
-              exit.transition().duration(1200)
-                .attr("r", 0)
-                .remove()
-            ))
-        )
-      )
-  }, [visibleCircles])
+    wasShowing.current = isShowing;
+  }, [isShowing])
+
+  const style = useSpring({
+    config: {
+      duration: 1200
+    },
+    r: isShowing ? 3 : 0,
+    opacity: isShowing ? 1 : 0,
+  })
 
   return (
-    <svg ref={ref} viewBox="0 0 100 20" />
+    <animated.circle
+      {...style}
+      cx={index * 15 + 10}
+      cy="10"
+      fill={
+        isShowing === 0
+          ? "tomato"
+          : !wasShowing.current
+          ? "cornflowerblue"
+          : "lightgrey"
+      }
+    />
   );
 };
 
-export default AnimatedCircles;
+export default AnimatedCircle;

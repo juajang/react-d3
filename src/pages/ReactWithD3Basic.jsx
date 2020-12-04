@@ -7,7 +7,8 @@ import { Divider } from "antd";
 import Mark from "../components/common/Mark";
 import RandomCirclesUsingReact from "../components/basic/RandomCircleUsingReact";
 import RandomCircles from "../components/basic/RandomCircles";
-import AnimatedCircle from '../components/basic/AnimatedCircle';
+import AnimatedCircle from '../components/basic/AnimatedCirclesUsingTransition';
+import AnimatedCircleUsingReact from '../components/basic/AnimatedCircleUsingReact';
 
 const Wrapper = styled.div`
   display: grid;
@@ -92,6 +93,13 @@ const ReactWithD3Basic = () => {
         새로운 라운드에서 빠지게 되는 circle은 빨간색으로 표시합니다.  <br/>
       </p>
       <AnimatedCircle/>
+      <Divider/>
+      <Title> Animated Circles using React </Title>
+      <p>
+        react-spring의 <Mark> useSpring </Mark> hook을 사용하여 circle의
+        <strong> radius </strong>와 <strong> opacity </strong>를 다룹니다.
+      </p>
+      <AnimatedCircleUsingReact/>
     </Wrapper>
   );
 }
