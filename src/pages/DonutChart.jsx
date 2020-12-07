@@ -11,6 +11,10 @@ const Donut = styled.svg`
     font-size: 30px;
     font-weight: bolder;
   }
+  .annotation {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+  }
 `;
 const Legend = styled.svg`
   font-size: 12px;
@@ -44,7 +48,11 @@ const DonutChart = () => {
     .domain(d3.extent(data, (data) => data.value))
     .range([0, 1])
 
-  const colored = (t) => d3.interpolateYlGnBu(colorScale(t));
+  const colored = (t) => d3.interpolatePuBu(colorScale(t));
+
+  const arcLabel = () => {
+    return d3.arc().innerRadius(innerRadius).outerRadius(radius);
+  }
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -77,35 +85,66 @@ const DonutChart = () => {
       .value(d => d.value)
       .padAngle(0.01);
 
+    // add pie
     svg
+      .append("g")
       .selectAll(".slice")
       .data(pie(data))
       .join("path")
-      .attr('fill', d => colored(d.value))
-      .attr('d', arc)
-      .on("mouseover", function() {
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .attr("d", arcOver)
-        textTop
-          .text(d3.select(this).datum().data.label)
-          .attr("y", -10)
-        textBottom
-          .text(d3.select(this).datum().data.value + 'm')
-          .attr("y", 10)
+        .attr('fill', d => colored(d.value))
+        .attr('d', arc)
+        .on("mouseover", function() {
+          d3.select(this)
+            .transition()
+            .duration(200)
+            .attr("d", arcOver)
+          textTop
+            .text(d3.select(this).datum().data.label)
+            .attr("y", -10)
+          textBottom
+            .text(d3.select(this).datum().data.value + 'm')
+            .attr("y", 10)
+        })
+        .on("mouseout", function() {
+          d3.select(this)
+            .transition()
+            .duration(100)
+            .attr('d', arc)
+          textTop
+            .text("TOTAL")
+            .attr('y', -10)
+          textBottom
+            .text(total + 'm');
+        })
+      .transition()
+      .duration(1000)
+      .attrTween('d', (d) => {
+        // return an interpolater
+        const interpolate = d3.interpolate({
+          startAngle: 0,
+          endAngle: 0
+        }, d);
+        return function(t) {
+          return arc(interpolate(t));
+        }
       })
-      .on("mouseout", function() {
-        d3.select(this)
-          .transition()
-          .duration(100)
-          .attr('d', arc)
-        textTop
-          .text("TOTAL")
-          .attr('y', -10)
-        textBottom
-          .text(total + 'm');
-      })
+
+    // add annotation
+    svg
+      .append("g")
+      .attr("font-size", 12)
+      .attr("text-anchor", "middle")
+      .selectAll(".annotation")
+      .data(pie(data))
+      .join("text")
+        .transition()
+        .duration(800)
+        .text((d) => d.data.label)
+        .attr("transform", d => `translate(${arcLabel().centroid(d)})`)
+        .attr("dy", "0.4em")
+        .attr("text-anchor", "middle")
+        .attr("fill", 'black')
+      .transition()
   }, [])
 
   return (
