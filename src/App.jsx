@@ -18,6 +18,7 @@ import BarChart from './pages/BarChart';
 import AnimatedBarChart from './pages/tutorials/AnimatedBarChart';
 import InteractivityBasic from './pages/tutorials/InteractivityBasic';
 import DonutChart from './pages/DonutChart';
+import AdvancedBarChart from './pages/AdvancedBarChart';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/donut-chart" component={DonutChart}/>
             <Route path="/curved-line-chart" component={CurvedLineChart}/>
             <Route path="/react-with-d3" component={ReactWithD3Basic}/>
+            <Route path="/advanced-bar-chart" component={AdvancedBarChart}/>
             <Route path="/tutorials/basics" component={Basics}/>
             <Route path="/tutorials/curved-line-chart" component={CurvedLineChart}/>
             <Route path="/tutorials/animated-bar-chart" component={AnimatedBarChart}/>
