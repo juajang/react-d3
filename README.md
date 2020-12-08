@@ -10,9 +10,11 @@
 An introduction to d3.js - 
 [Link](https://www.d3-graph-gallery.com/intro_d3js.html)
 
-## React + D3.js Examples
 How to use D3.js in React.js -
 [Link](https://wattenberger.com/blog/react-and-d3)
+
+## Advanced Charts Examples
+Responsive & animated donut chart & bar chart
 
 ## React (Hooks) + D3.js Lectures
 Using React (Hooks) with D3 -

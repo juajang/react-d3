@@ -55,6 +55,7 @@ const AdvancedBarChart = () => {
   let marginImg = 5;
   let imgHeight = graphHeight / data.length - marginImg;
 
+  // resize graph based on the window size
   useEffect(() => {
     if (windowWidth < 600) {
       width = windowWidth * 0.9;
@@ -65,7 +66,6 @@ const AdvancedBarChart = () => {
 
       imgWidth = graphWidth / data.length - marginImg;
       imgHeight = graphHeight / data.length - marginImg;
-      console.log(windowWidth, graphHeight, imgHeight);
     }
   }, [windowHeight, windowWidth])
 
