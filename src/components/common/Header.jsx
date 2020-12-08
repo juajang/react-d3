@@ -32,12 +32,12 @@ const Header = () => {
         <LinkButton name="Basic" url="/basic"/>
         <LinkButton name="Line Chart" url="/line-chart"/>
         <LinkButton name="Bar Chart" url="/bar-chart"/>
+        <LinkButton name="React with D3 Basics" url="/react-with-d3"/>
+      </ButtonContainer>
+      <h2> Responsive Charts </h2>
+      <ButtonContainer>
         <LinkButton name="Donut Chart" url="/donut-chart"/>
         <LinkButton name="Advanced Bar Chart" url="/advanced-bar-chart"/>
-      </ButtonContainer>
-      <h2> How to use React with D3 </h2>
-      <ButtonContainer>
-        <LinkButton name="React with D3 Basics" url="/react-with-d3"/>
       </ButtonContainer>
       <h2> Using React(Hooks) with D3 </h2>
       <ButtonContainer>

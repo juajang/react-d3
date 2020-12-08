@@ -32,14 +32,14 @@ const AdvancedBarChart = () => {
   const ref = useRef();
 
   const data = [
-    {name: "고양이", img: process.env.PUBLIC_URL + '/party.png', count: 21},
-    {name: "강아지", img: process.env.PUBLIC_URL + '/party.png', count: 13},
-    {name: "곰", img: process.env.PUBLIC_URL + '/party.png', count: 8},
-    {name: "너구리", img: process.env.PUBLIC_URL + '/party.png', count: 5},
-    {name: "백조", img: process.env.PUBLIC_URL + '/party.png', count: 3},
-    {name: "호랑이", img: process.env.PUBLIC_URL + '/party.png', count: 2},
-    {name: "거위", img: process.env.PUBLIC_URL + '/party.png', count: 1},
-    {name: "미어", img: process.env.PUBLIC_URL + '/party.png', count: 1}
+    {name: "고양이", img: `${process.env.PUBLIC_URL}/002-kiwi.png`, count: 21},
+    {name: "강아지", img: `${process.env.PUBLIC_URL}/003-rum.png`, count: 13},
+    {name: "곰", img: `${process.env.PUBLIC_URL}/004-rugby.png`, count: 8},
+    {name: "너구리", img: `${process.env.PUBLIC_URL}/005-eucalyptus.png`, count: 5},
+    {name: "백조", img: `${process.env.PUBLIC_URL}/006-koala.png`, count: 3},
+    {name: "호랑이", img: `${process.env.PUBLIC_URL}/007-vegemite.png`, count: 2},
+    {name: "거위", img: `${process.env.PUBLIC_URL}/008-acacia.png`, count: 1},
+    {name: "미역", img: `${process.env.PUBLIC_URL}/009-kangaroo.png`, count: 1}
   ]
 
   const margin = {
@@ -52,7 +52,7 @@ const AdvancedBarChart = () => {
   let graphHeight = height - margin.top - margin.bottom;
 
   let imgWidth = 35;
-  let marginImg = 0;
+  let marginImg = 5;
   let imgHeight = graphHeight / data.length - marginImg;
 
   useEffect(() => {
@@ -63,9 +63,9 @@ const AdvancedBarChart = () => {
       graphWidth = width - margin.left - margin.right;
       graphHeight = height - margin.top - margin.bottom;
 
-      imgWidth = 35;
-      marginImg = 0;
-      imgHeight = graphHeight / data.length - marginImg * 2;
+      imgWidth = graphWidth / data.length - marginImg;
+      imgHeight = graphHeight / data.length - marginImg;
+      console.log(windowWidth, graphHeight, imgHeight);
     }
   }, [windowHeight, windowWidth])
 
@@ -98,6 +98,20 @@ const AdvancedBarChart = () => {
     svg.select(".y-axis")
       .call(yAxis)
 
+    svg.select(".y-img-axis").selectAll(".image").remove();
+
+    // add custom axis with images
+    svg.select('.y-img-axis')
+      .selectAll(".image")
+      .data(data)
+      .join('svg:image')
+      .attr('class', 'image')
+      .attr('x', -45)
+      .attr('y', d => yScale(d.name) - 7)
+      .attr('xlink:href', d => d.img)
+      .attr('width', imgWidth)
+      .attr('height', imgHeight)
+
     svg
       .selectAll(".bar")
       .data(data)
@@ -118,18 +132,8 @@ const AdvancedBarChart = () => {
         <h2> Advanced Bar Chart </h2>
         <svg ref={ref} width={width} height={height}>
           <g className="x-axis" transform={`translate(${margin.left}, ${margin.top})`}/>
-          <g className="y-axis" transform={`translate(${margin.left - imgWidth}, 0)`}>
-            {data.map(({ name, img }, index) =>
-              <g key={index}>
-                <image
-                  y={margin.top + index * (imgHeight)}
-                  height={imgHeight}
-                  width={imgWidth}
-                  href={img}
-                />
-              </g>
-            )}
-          </g>
+          <g className="y-axis" transform={`translate(${margin.left - imgWidth - 15}, 0)`}/>
+          <g className="y-img-axis" transform={`translate(${margin.left}, 0)`}/>
         </svg>
       </Canvas>
     </>

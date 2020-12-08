@@ -2,6 +2,11 @@ import React, { useEffect, useRef } from "react";
 import styled from 'styled-components';
 import * as d3 from 'd3';
 
+const Wrapper = styled.div`
+  display: grid;
+  place-items: center;  
+`;
+
 const Donut = styled.svg`
   font-family: 'Roboto', sans-serif;
   .textTop {
@@ -148,7 +153,7 @@ const DonutChart = () => {
   }, [])
 
   return (
-    <>
+    <Wrapper>
       <h1>Donut Chart</h1>
       <Donut
         width={graphWidth}
@@ -182,7 +187,7 @@ const DonutChart = () => {
         </g>
       )}
       </Legend>
-    </>
+    </Wrapper>
   );
 }
 
