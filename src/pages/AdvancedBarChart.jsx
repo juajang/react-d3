@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import * as d3 from "d3";
 import styled from 'styled-components';
 import useWindowDimensions from '../hooks/useWindowDimensions';
@@ -31,7 +31,7 @@ const AdvancedBarChart = () => {
   const { windowHeight, windowWidth } = useWindowDimensions();
   const ref = useRef();
 
-  const data = [
+  const data = useMemo(() => [
     {name: "고양이", img: `${process.env.PUBLIC_URL}/002-kiwi.png`, count: 21},
     {name: "강아지", img: `${process.env.PUBLIC_URL}/003-rum.png`, count: 13},
     {name: "곰", img: `${process.env.PUBLIC_URL}/004-rugby.png`, count: 8},
@@ -40,36 +40,17 @@ const AdvancedBarChart = () => {
     {name: "호랑이", img: `${process.env.PUBLIC_URL}/007-vegemite.png`, count: 2},
     {name: "거위", img: `${process.env.PUBLIC_URL}/008-acacia.png`, count: 1},
     {name: "미역", img: `${process.env.PUBLIC_URL}/009-kangaroo.png`, count: 1}
-  ]
+  ], [])
 
   const margin = {
     top: 30, right: 20, bottom: 10, left: 100
   }
+
   let width = 500;
   let height = 400;
+  let imgWidth = 30;
 
-  let graphWidth = width - margin.left - margin.right;
-  let graphHeight = height - margin.top - margin.bottom;
-
-  let imgWidth = 35;
-  let marginImg = 5;
-  let imgHeight = graphHeight / data.length - marginImg;
-
-  // resize graph based on the window size
-  useEffect(() => {
-    if (windowWidth < 600) {
-      width = windowWidth * 0.9;
-      height = 300;
-
-      graphWidth = width - margin.left - margin.right;
-      graphHeight = height - margin.top - margin.bottom;
-
-      imgWidth = graphWidth / data.length - marginImg;
-      imgHeight = graphHeight / data.length - marginImg;
-    }
-  }, [windowHeight, windowWidth])
-
-  useEffect(() => {
+  const createBarChart = useCallback((graphWidth, graphHeight, imgWidth, imgHeight) => {
     const svg = d3.select(ref.current);
 
     const xScale = d3.scaleLinear()
@@ -124,7 +105,34 @@ const AdvancedBarChart = () => {
       .duration(500)
       .attr("width", ({ count }) => xScale(count))
       .attr("fill", ({ count }) => d3.interpolateGnBu(color(count)));
-  }, [graphWidth, graphHeight, data]);
+  }, [data, margin.left, margin.top]);
+
+  // resize graph based on the window size
+  useEffect(() => {
+    let width = 500;
+    let height = 400;
+
+    let graphWidth = width - margin.left - margin.right;
+    let graphHeight = height - margin.top - margin.bottom;
+
+    let marginImg = 2;
+    let imgWidth = graphWidth / data.length - marginImg;
+    let imgHeight = graphHeight / data.length - marginImg;
+
+    if (windowWidth < 600) {
+      const width = windowWidth * 0.9;
+      height = 300;
+
+      graphWidth = width - margin.left - margin.right;
+      graphHeight = height - margin.top - margin.bottom;
+
+      imgHeight = (graphHeight / data.length - marginImg > 0)
+        ? (graphHeight / data.length - marginImg) : 10;
+      imgWidth = imgHeight
+    }
+
+    createBarChart(graphWidth, graphHeight, imgWidth, imgHeight);
+  }, [windowHeight, windowWidth, createBarChart, margin.left, margin.right, margin.top, margin.bottom, data.length])
 
   return (
     <>

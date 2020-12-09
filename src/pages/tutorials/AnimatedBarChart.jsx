@@ -68,7 +68,7 @@ const AnimatedBarChart = () => {
       .transition()
       .attr("height", ({ count }) => graphHeight - y(count))
       .attr("fill", ({ count }) => colorInterpolate(color(count)));
-  }, [graphWidth, graphHeight, data]);
+  }, [graphWidth, graphHeight, data, margin.left, margin.right, margin.top, margin.bottom]);
 
   return (
     <>

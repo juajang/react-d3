@@ -62,7 +62,7 @@ const BarChart = () => {
     };
 
     createBarChart();
-  }, [])
+  }, [graphHeight, margin.left])
 
   return (
     <>

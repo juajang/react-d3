@@ -38,6 +38,7 @@ const Header = () => {
       <ButtonContainer>
         <LinkButton name="Donut Chart" url="/donut-chart"/>
         <LinkButton name="Advanced Bar Chart" url="/advanced-bar-chart"/>
+        <LinkButton name="Force-Directed Chart" url="/force-directed-graph"/>
       </ButtonContainer>
       <h2> Using React(Hooks) with D3 </h2>
       <ButtonContainer>

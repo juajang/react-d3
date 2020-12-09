@@ -11,7 +11,6 @@ const InteractivityBasic = () => {
   }
   const width = 500;
   const height = 300;
-  const graphWidth = width - margin.left - margin.right;
   const graphHeight = height - margin.top - margin.bottom;
 
   useEffect(() => {
