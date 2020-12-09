@@ -115,7 +115,7 @@ const AdvancedBarChart = () => {
     let graphWidth = width - margin.left - margin.right;
     let graphHeight = height - margin.top - margin.bottom;
 
-    let marginImg = 2;
+    let marginImg = 10;
     let imgWidth = graphWidth / data.length - marginImg;
     let imgHeight = graphHeight / data.length - marginImg;
 
