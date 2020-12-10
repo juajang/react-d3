@@ -24,16 +24,17 @@ const CurvedLineChart = () => {
     }, [data]);
 
     return (
-      <React.Fragment>
-          <svg ref={svgRef}/>
-          <br />
-          <Button onClick={() => setData(data.map(value => value + 5))}>
-              Update data
-          </Button>
-          <Button onClick={() => setData(data.filter(value => value < 35))}>
-              Filter data
-          </Button>
-      </React.Fragment>
+      <>
+        <h2> Curved Line Chart </h2>
+        <svg ref={svgRef}/>
+        <br />
+        <Button onClick={() => setData(data.map(value => value + 5))}>
+            Update data
+        </Button>
+        <Button onClick={() => setData(data.filter(value => value < 35))}>
+            Filter data
+        </Button>
+      </>
     );
 };
 

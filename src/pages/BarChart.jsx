@@ -66,7 +66,7 @@ const BarChart = () => {
 
   return (
     <>
-      <h2> Bar CHart </h2>
+      <h2> Bar Chart </h2>
       <Canvas>
         <svg width={width} height={height}>
           <g ref={ref} width={graphWidth} height={graphHeight} transform={`translate(${margin.left}, ${margin.top})`}>

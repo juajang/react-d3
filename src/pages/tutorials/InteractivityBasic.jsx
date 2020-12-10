@@ -81,6 +81,7 @@ const InteractivityBasic = () => {
 
   return (
     <>
+      <h2> Interactive Chart </h2>
       <svg ref={svgRef} width={width} height={height}>
         <g className="x-axis"/>
         <g className="y-axis"/>

@@ -20,6 +20,7 @@ import InteractivityBasic from './pages/tutorials/InteractivityBasic';
 import DonutChart from './pages/DonutChart';
 import AdvancedBarChart from './pages/AdvancedBarChart';
 import ForceDirectedGraph from './pages/ForceDirectedGraph';
+import CandlestickChart from './pages/CandlestickChart';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/donut-chart" component={DonutChart}/>
             <Route path="/curved-line-chart" component={CurvedLineChart}/>
             <Route path="/react-with-d3" component={ReactWithD3Basic}/>
+            <Route path="/candlestick-chart" component={CandlestickChart}/>
             <Route path="/advanced-bar-chart" component={AdvancedBarChart}/>
             <Route path="/force-directed-graph" component={ForceDirectedGraph}/>
             <Route path="/tutorials/basics" component={Basics}/>

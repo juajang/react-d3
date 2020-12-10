@@ -46,3 +46,13 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+main {
+  display: grid;
+  place-items: center;
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: bolder;
+}

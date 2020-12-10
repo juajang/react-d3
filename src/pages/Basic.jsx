@@ -4,11 +4,6 @@ import styled from "styled-components";
 import { Divider } from "antd";
 import Mark from "../components/common/Mark";
 
-const Wrapper = styled.div`
-  display: grid;
-  place-items: center;
-`;
-
 const Title = styled.h2`
   font-size: 22px;
   font-weight: bolder;
@@ -141,7 +136,7 @@ const Basic = () => {
   })
 
   return (
-    <Wrapper>
+    <>
       <Title> All SVG Elements have been supported in JSX!  </Title>
       <svg ref={refCircle}>
         <circle
@@ -218,7 +213,7 @@ const Basic = () => {
           </g>
         </svg>
       </div>
-    </Wrapper>
+    </>
   );
 }
 

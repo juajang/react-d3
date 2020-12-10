@@ -10,11 +10,6 @@ import RandomCircles from "../components/basic/RandomCircles";
 import AnimatedCircle from '../components/basic/AnimatedCirclesUsingTransition';
 import AnimatedCircleUsingReact from '../components/basic/AnimatedCircleUsingReact';
 
-const Wrapper = styled.div`
-  display: grid;
-  place-items: center;
-`;
-
 const Title = styled.h2`
   font-size: 22px;
   font-weight: bolder;
@@ -57,7 +52,7 @@ const ReactWithD3Basic = () => {
   }, [])
 
   return (
-    <Wrapper>
+    <>
       <Title> All SVG Elements have been supported in JSX!  </Title>
       <svg ref={refCircle}>
         <circle
@@ -100,7 +95,7 @@ const ReactWithD3Basic = () => {
         <strong> radius </strong>와 <strong> opacity </strong>를 다룹니다.
       </p>
       <AnimatedCircleUsingReact/>
-    </Wrapper>
+    </>
   );
 }
 

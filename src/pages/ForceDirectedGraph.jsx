@@ -1,12 +1,6 @@
 import React, { useEffect, useRef } from "react";
-import styled from 'styled-components';
 import data from '../data/forceGraphData.json';
 import * as d3 from 'd3';
-
-const Wrapper = styled.div`
-  display: grid;
-  place-items: center;
-`;
 
 const ForceDirectedGraph = () => {
   const svgRef = useRef(null);
@@ -126,11 +120,8 @@ const ForceDirectedGraph = () => {
   },[])
 
   return (
-    <Wrapper>
-      <h2 style={{
-        fontSize: '24px',
-        fontWeight: 'bold'
-      }}> Force-Directed Graph </h2>
+    <>
+      <h2> Force-Directed Graph </h2>
       <svg
         width={width}
         height={height}
@@ -139,7 +130,7 @@ const ForceDirectedGraph = () => {
         <g className="link" stroke="#999" strokeOpacity="0.6"/>
         <g className="node" stroke="#999" strokeWidth="1.5"/>
       </svg>
-    </Wrapper>
+    </>
   );
 }
 

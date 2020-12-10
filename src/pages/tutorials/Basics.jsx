@@ -21,13 +21,14 @@ const Basics = () => {
 
     return (
       <>
-          <svg ref={svgRef}/>
-          <Button onClick={() => setData(data.map(value => value + 5))}>
-              Update data
-          </Button>
-          <Button onClick={() => setData(data.filter(value => value < 35))}>
-              Filter data
-          </Button>
+        <h2> The Basics </h2>
+        <svg ref={svgRef}/>
+        <Button onClick={() => setData(data.map(value => value + 5))}>
+            Update data
+        </Button>
+        <Button onClick={() => setData(data.filter(value => value < 35))}>
+            Filter data
+        </Button>
       </>
     );
 };
