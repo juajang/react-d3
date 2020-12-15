@@ -1,7 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from "d3"
 import styled from "styled-components";
-import chartData from "../data/barData.csv";
+import chartData from "../data/barData";
+
+type ChartData = {
+  date: string;
+  value: number;
+}
 
 const Canvas = styled.div`
   display: grid;
@@ -16,9 +21,9 @@ const Canvas = styled.div`
 `;
 
 const BarChart = () => {
-  const ref = useRef();
-  const xAxisRef = useRef();
-  const yAxisRef = useRef();
+  const ref = useRef<SVGGElement>(null);
+  const xAxisRef = useRef<SVGGElement>(null)
+  const yAxisRef = useRef<SVGGElement>(null)
 
   const margin = {
     top: 20, right: 20, bottom: 70, left: 30
@@ -30,10 +35,11 @@ const BarChart = () => {
 
   useEffect(() => {
     const createBarChart = async () => {
-      const data = await d3.csv(chartData);
+      const data = chartData.nodes;
 
+      const maxValue = d3.max(data, d => d.value) as number; // cast to number
       const y = d3.scaleLinear()
-        .domain([0, d3.max(data, d => parseInt(d.value))])
+        .domain([0, maxValue])
         .range([graphHeight, 0])
 
       const x = d3.scaleBand()
@@ -42,19 +48,19 @@ const BarChart = () => {
         .paddingInner(0.2)
         .paddingOuter(0.2);
 
-      const svg = d3.select(ref.current);
+      const svg: any = d3.select(ref.current);
       svg
         .selectAll(".bar-rect")
         .data(data)
         .join("rect")
         .attr('class','bar-rect')
         .attr('width', x.bandwidth)
-        .attr('height', d => graphHeight - y(parseInt(d.value)))
-        .attr('x', d => x(d.date))
-        .attr('y', d => y(d.value))
+        .attr('height', ({ value }: ChartData) => graphHeight - y(value))
+        .attr('x', ({ date }: ChartData) => x(date))
+        .attr('y',  ({ value }: ChartData)=> y(value))
 
-      const xAxis = d3.axisBottom(x);
-      const yAxis = d3.axisLeft(y)
+      const xAxis: any = d3.axisBottom(x);
+      const yAxis: any = d3.axisLeft(y)
         .ticks(10)
 
       d3.select(xAxisRef.current).call(xAxis);
