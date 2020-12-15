@@ -11,15 +11,15 @@ const Title = styled.h2`
 `;
 
 const Basic = () => {
-  const refCircle = useRef();
-  const refCoordinate = useRef();
-  const refScale = useRef();
-  const refAxis = useRef();
-  const refX = useRef();
-  const refY = useRef();
-  const refData = useRef();
-  const refX2 = useRef();
-  const refY2 = useRef();
+  const refCircle = useRef<SVGSVGElement>(null);
+  const refCoordinate = useRef<SVGSVGElement>(null);
+  const refScale = useRef<SVGSVGElement>(null);
+  const refAxis = useRef<SVGSVGElement>(null);
+  const refX = useRef<SVGGElement>(null);
+  const refY = useRef<SVGGElement>(null);
+  const refData = useRef<SVGGElement>(null);
+  const refX2 = useRef<SVGGElement>(null);
+  const refY2 = useRef<SVGGElement>(null);
 
   const x = d3.scaleLinear()
     .domain([0, 100])
@@ -92,24 +92,29 @@ const Basic = () => {
     };
 
     const addAxis = () => {
+      const xAxis: any = d3.axisBottom(x);
       const svg = d3.select(refAxis.current);
-      svg.call(d3.axisBottom(x))
+      svg.call(xAxis);
     };
 
     const addAdjustedAxis = () => {
       const svgX = d3.select(refX.current);
-      svgX.call(d3.axisBottom(xAdjusted));
+      const xAxis: any = d3.axisBottom(xAdjusted)
+      svgX.call(xAxis);
 
+      const yAxis: any = d3.axisLeft(yAdjusted);
       const svgY = d3.select(refY.current);
-      svgY.call(d3.axisLeft(yAdjusted));
+      svgY.call(yAxis);
     };
 
     const addAdjustedAxis2 = () => {
       const svgX = d3.select(refX2.current);
-      svgX.call(d3.axisBottom(xAdjusted));
+      const xAxis: any = d3.axisBottom(xAdjusted);
+      svgX.call(xAxis);
 
+      const yAxis: any = d3.axisLeft(yAdjusted);
       const svgY = d3.select(refY2.current);
-      svgY.call(d3.axisLeft(yAdjusted));
+      svgY.call(yAxis);
     };
 
     addStroke();

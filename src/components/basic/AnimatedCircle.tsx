@@ -1,10 +1,15 @@
 import React, { useRef, useEffect } from "react";
 import { animated, useSpring } from 'react-spring';
 
-const AnimatedCircle = ({ index, isShowing }) => {
-  const wasShowing = useRef(false);
+interface AnimatedCircle {
+  index: number,
+  isShowing: number
+}
+const AnimatedCircle = ({ index, isShowing }: AnimatedCircle) => {
+  const wasShowing = useRef<SVGCircleElement>(null);
 
   useEffect(() => {
+    // @ts-ignore
     wasShowing.current = isShowing;
   }, [isShowing])
 
@@ -17,6 +22,7 @@ const AnimatedCircle = ({ index, isShowing }) => {
   })
 
   return (
+    // @ts-ignore
     <animated.circle
       {...style}
       cx={index * 15 + 10}

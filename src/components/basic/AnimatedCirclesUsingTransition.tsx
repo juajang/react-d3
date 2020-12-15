@@ -2,49 +2,51 @@ import React, { useRef, useEffect, useState } from "react";
 import useInterval from '../../hooks/useInterval';
 import * as d3 from "d3";
 
-export const generateCircles = () => {
-  const circles = new Array(5).fill(0);
+type Circles = (false | number)[]
+
+export function generateCircles(): Circles {
+  const circles  = new Array(5).fill(0);
   return circles.map((value, index) => {
     return Math.random() > 0.5 && index + 1;
   })
-};
+}
 
 const AnimatedCircles = () => {
-  const [visibleCircles, setVisibleCircles] = useState(
+  const [visibleCircles, setVisibleCircles] = useState<Circles>(
     generateCircles()
   );
-  const ref = useRef();
+  const ref = useRef<SVGSVGElement>(null);
 
   useInterval(() => {
     setVisibleCircles(generateCircles());
   }, 2000);
 
   useEffect(() => {
-    const svgElement = d3.select(ref.current);
+    const svgElement: any = d3.select(ref.current);
     svgElement
       .selectAll("circle")
-      .data(visibleCircles, d => d)
+      .data(visibleCircles)
       .join(
-        enter => (
+        (enter: any) => (
           enter
             .append("circle")
-            .attr("cx", (d, i) => i * 15 + 10)
+            .attr("cx", (d: Circles, i: number) => i * 15 + 10)
             .attr("cy", 10)
             .attr("r", 0)
             .attr("fill", "cornflowerblue")
-          .call(enter => (
+          .call((enter: any)=> (
             enter.transition().duration(1200)
               .attr("cy", 10)
               .attr("r", 3)
               .style("opacity", 1)
           ))
         ),
-        update => (
+        (update: any) => (
           update.attr("fill", "lightgrey")
         ),
-        exit => (
+        (exit: any) => (
           exit.attr("fill", "tomato")
-            .call(exit => (
+            .call((exit: any) => (
               exit.transition().duration(1200)
                 .attr("r", 0)
                 .style("opacity", 0)
