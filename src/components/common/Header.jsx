@@ -35,11 +35,12 @@ const Header = () => {
         <LinkButton name="React with D3 Basics" url="/react-with-d3"/>
         <LinkButton name="Candlestick Chart" url="/candlestick-chart"/>
       </ButtonContainer>
-      <h2> Responsive Charts </h2>
+      <h2> Interactive Charts </h2>
       <ButtonContainer>
         <LinkButton name="Donut Chart" url="/donut-chart"/>
         <LinkButton name="Advanced Bar Chart" url="/advanced-bar-chart"/>
         <LinkButton name="Force-Directed Graph" url="/force-directed-graph"/>
+        <LinkButton name="Index Chart" url="/index-chart"/>
       </ButtonContainer>
       <h2> Using React(Hooks) with D3 </h2>
       <ButtonContainer>

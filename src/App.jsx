@@ -21,6 +21,7 @@ import DonutChart from './pages/DonutChart';
 import AdvancedBarChart from './pages/AdvancedBarChart';
 import ForceDirectedGraph from './pages/ForceDirectedGraph';
 import CandlestickChart from './pages/CandlestickChart';
+import IndexChart from './pages/IndexChart';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             <Route path="/candlestick-chart" component={CandlestickChart}/>
             <Route path="/advanced-bar-chart" component={AdvancedBarChart}/>
             <Route path="/force-directed-graph" component={ForceDirectedGraph}/>
+            <Route path="/index-chart" component={IndexChart}/>
             <Route path="/tutorials/basics" component={Basics}/>
             <Route path="/tutorials/curved-line-chart" component={CurvedLineChart}/>
             <Route path="/tutorials/animated-bar-chart" component={AnimatedBarChart}/>
