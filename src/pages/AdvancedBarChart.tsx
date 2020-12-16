@@ -26,10 +26,15 @@ const Canvas = styled.div`
     stroke-width: 0;
   }
 `
+interface AnimalData {
+  name: string;
+  img: string;
+  count: number;
+}
 
 const AdvancedBarChart = () => {
   const { windowHeight, windowWidth } = useWindowDimensions();
-  const ref = useRef();
+  const ref = useRef<SVGSVGElement>(null);
 
   const data = useMemo(() => [
     {name: "고양이", img: `${process.env.PUBLIC_URL}/002-kiwi.png`, count: 21},
@@ -51,27 +56,28 @@ const AdvancedBarChart = () => {
   let imgWidth = 30;
 
   const createBarChart = useCallback((graphWidth, graphHeight, imgWidth, imgHeight) => {
-    const svg = d3.select(ref.current);
+    const svg: any = d3.select(ref.current);
 
-    const xScale = d3.scaleLinear()
-      .domain([0, d3.max(data, d => parseInt(d.count))])
+    const xMaxValue = d3.max(data, (d: AnimalData) => d.count) as number;
+    const xScale: any = d3.scaleLinear()
+      .domain([0, xMaxValue])
       .range([0, graphWidth])
 
-    const yScale = d3.scaleBand()
+    const yScale: any = d3.scaleBand()
       .range([margin.top, graphHeight])
       .domain(data.map((d) => d.name))
       .paddingOuter(0)
       .paddingInner(0.3);
 
     const color = d3.scaleLinear()
-      .domain([0, d3.max(data, d => parseInt(d.count))])
+      .domain([0, xMaxValue])
       .range([0, 1])
 
-    const xAxis = d3.axisTop(xScale);
+    const xAxis: any = d3.axisTop(xScale);
     svg.select(".x-axis")
       .call(xAxis)
 
-    const yAxis = d3.axisLeft(yScale)
+    const yAxis: any = d3.axisLeft(yScale)
       .ticks(data.length)
       .tickSizeInner(0)
       .tickSizeOuter(0);
@@ -88,8 +94,8 @@ const AdvancedBarChart = () => {
       .join('svg:image')
       .attr('class', 'image')
       .attr('x', -45)
-      .attr('y', d => yScale(d.name) - 7)
-      .attr('xlink:href', d => d.img)
+      .attr('y', (d: AnimalData) => yScale(d.name) - 7)
+      .attr('xlink:href', (d: AnimalData) => d.img)
       .attr('width', imgWidth)
       .attr('height', imgHeight)
 
@@ -99,12 +105,12 @@ const AdvancedBarChart = () => {
       .join("rect")
       .attr("class", "bar")
       .attr("x", margin.left)
-      .attr("y", (d) => yScale(d.name))
+      .attr("y", (d: AnimalData) => yScale(d.name))
       .attr("height", yScale.bandwidth())
       .transition()
       .duration(500)
-      .attr("width", ({ count }) => xScale(count))
-      .attr("fill", ({ count }) => d3.interpolateGnBu(color(count)));
+      .attr("width", ({ count }: AnimalData) => xScale(count))
+      .attr("fill", ({ count }: AnimalData) => d3.interpolateGnBu(color(count)));
   }, [data, margin.left, margin.top]);
 
   // resize graph based on the window size

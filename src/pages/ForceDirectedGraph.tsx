@@ -1,14 +1,22 @@
-import React, { useEffect, useRef } from "react";
-import data from '../data/forceGraphData.json';
+import React, { ReactNode, useEffect, useRef } from 'react';
+import data from '../data/forceGraphData';
 import * as d3 from 'd3';
+import { d3Event, d3DragEventData } from '../types/types';
+
+interface GraphData {
+  id: string,
+  group: string;
+  radius: number;
+  citing_patents_count: number;
+}
 
 const ForceDirectedGraph = () => {
-  const svgRef = useRef(null);
+  const svgRef = useRef<SVGSVGElement>(null);
   const width = 680;
   const height = 680;
 
   useEffect(() => {
-    const svg = d3.select(svgRef.current);
+    const svg: any = d3.select(svgRef.current);
 
     // 1. create a simulation for an array of nodes
     // 2. compose the desired forces
@@ -24,34 +32,40 @@ const ForceDirectedGraph = () => {
       .range(d3.schemeSet3);
 
     // 드래그 시뮬레이션
-    const drag = (simulation) => {
+    const drag = (simulation: any) => {
       // d: node
-      function dragStarted(event, d) {
+      function dragStarted(event?: d3Event, d?: d3DragEventData) {
         // alpha: simulation이 시간이 지남에 따라 식혀지면서 (cool down) 줄어드는 값
         // alphaMin에 다다르면 simulation이 멈춘다.
         // 드래그 시작, fx/fy를 현재의 x/y position으로 정하기
-        if (!event.active) simulation.alphaTarget(0.4).restart();
-        d.fx = d.x;
-        d.fy = d.y;
+        if (!event?.active) simulation.alphaTarget(0.4).restart();
+        if (d) {
+          d.fx = d.x;
+          d.fy = d.y;
+        }
       }
 
-      function dragged(event,d) {
+      function dragged(event?: d3Event, d?: d3DragEventData) {
         // 드래그 하는 중
-        d.fx = event.x;
-        d.fy = event.y;
+        if (d) {
+          d.fx = event?.x as number;
+          d.fy = event?.y as number;
+        }
       }
 
-      function dragEnded(event,d) {
+      function dragEnded(event?: d3Event, d?: d3DragEventData) {
         // 드래그가 멈추면 그 즉시 시뮬레이션도 멈춤
-        if (!event.active) simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
+        if (!event?.active) simulation.alphaTarget(0);
+        if (d) {
+          d.fx = null;
+          d.fy = null;
+        }
       }
 
       return d3.drag()
-        .on("start", dragStarted)
-        .on("drag", dragged)
-        .on("end", dragEnded);
+        .on("start", (dragStarted as any))
+        .on("drag", (dragged as any))
+        .on("end", (dragEnded as any));
     };
 
     const simulation = d3
@@ -71,7 +85,7 @@ const ForceDirectedGraph = () => {
       .forceSimulation(nodes)
       // link force - 연결된 node들을 같이 혹은 떨어져있게 하는 힘
       // id 접근자를 d.id로 설정 (default는 index 기반)
-      .force("link", d3.forceLink(links).id(d => d.id))
+      .force("link", d3.forceLink(links).id((d: any) => d.id))
       // Many-body force: 모든 노드들 사이에서 작용하는 힘
       // link와 달리 global하게 모든 노드들 사이에서(연결되어 있지 않더라도) 작용
       // electrostatic charge (repulsion) 정전기적 반발력 추가
@@ -87,7 +101,7 @@ const ForceDirectedGraph = () => {
       .selectAll('line')
       .data(links)
       .join('line')
-        .attr('stroke-width', d => Math.sqrt(d.value));
+        .attr('stroke-width', (d: GraphData) => Math.sqrt(d.citing_patents_count));
 
     const node = svg
       .select('.node')
@@ -95,13 +109,13 @@ const ForceDirectedGraph = () => {
       .data(nodes)
       .join('circle')
       .attr('r', 5)
-      .attr('fill', d => colorScale(d.group))
+      .attr('fill', (d: GraphData) => colorScale(d.group))
       // 드래그 이벤트들 추가
       .call(drag(simulation))
 
     node
       .append("title")
-      .text(d => d.id)
+      .text((d: GraphData) => d.id)
 
     simulation
       // tick - after each tick of the simulation’s internal timer
@@ -109,13 +123,13 @@ const ForceDirectedGraph = () => {
         link
           // x1, y1: first endpoint
           // x2, y2: second endpoint
-          .attr("x1", d => d.source.x)
-          .attr("y1", d => d.source.y)
-          .attr("x2", d => d.target.x)
-          .attr("y2", d => d.target.y)
+          .attr("x1", (d: any) => d.source.x)
+          .attr("y1", (d: any) => d.source.y)
+          .attr("x2", (d: any) => d.target.x)
+          .attr("y2", (d: any) => d.target.y)
         node
-          .attr("cx", d => d.x)
-          .attr("cy", d => d.y)
+          .attr("cx", (d: any) => d.x)
+          .attr("cy", (d: any) => d.y)
       })
   },[])
 

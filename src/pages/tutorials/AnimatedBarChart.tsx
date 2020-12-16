@@ -16,9 +16,14 @@ const Canvas = styled.div`
   }
 `
 
+interface Fruit {
+  name: string;
+  count: number;
+}
+
 const AnimatedBarChart = () => {
   const [data, setData] = useState(fruitsData)
-  const ref = useRef();
+  const ref = useRef<SVGSVGElement>(null);
   const margin = {
     top: 20, right: 20, bottom: 10, left: 20
   }
@@ -28,7 +33,7 @@ const AnimatedBarChart = () => {
   const graphHeight = height - margin.top - margin.bottom;
 
   useEffect(() => {
-    const svg = d3.select(ref.current);
+    const svg: any = d3.select(ref.current);
 
     const x = d3.scaleBand()
       .domain(data.map((value) => value.name))
@@ -36,23 +41,24 @@ const AnimatedBarChart = () => {
       .padding(0.5)
       .round(true)
 
+    const maxYValue: any = d3.max(data, d => d.count);
     const y = d3.scaleLinear()
-      .domain([0, d3.max(data, d => parseInt(d.count))])
+      .domain([0, maxYValue])
       .range([height - margin.bottom, margin.bottom])
     const colorInterpolate = d3.interpolateRgb("orange", "purple")
 
     const color = d3.scaleLinear()
-      .domain([0, d3.max(data, d => parseInt(d.count))])
+      .domain([0, maxYValue])
       .range([0, 1])
 
-    const xAxis = d3.axisBottom(x)
+    const xAxis: any = d3.axisBottom(x)
       .ticks(data.length)
       .tickSizeOuter(0);
 
     svg.select(".x-axis")
       .call(xAxis);
 
-    const yAxis = d3.axisRight(y);
+    const yAxis: any = d3.axisRight(y);
     svg.select(".y-axis")
       .call(yAxis)
 
@@ -62,12 +68,12 @@ const AnimatedBarChart = () => {
       .join("rect")
       .attr("class", "bar")
       .style("transform", "scale(1, -1)")
-      .attr("x", (value) => x(value.name))
+      .attr("x", (value: Fruit) => x(value.name))
       .attr("y", -graphHeight)
       .attr("width", x.bandwidth())
       .transition()
-      .attr("height", ({ count }) => graphHeight - y(count))
-      .attr("fill", ({ count }) => colorInterpolate(color(count)));
+      .attr("height", ({ count }: Fruit) => graphHeight - y(count))
+      .attr("fill", ({ count }: Fruit) => colorInterpolate(color(count)));
   }, [graphWidth, graphHeight, data, margin.left, margin.right, margin.top, margin.bottom]);
 
   return (

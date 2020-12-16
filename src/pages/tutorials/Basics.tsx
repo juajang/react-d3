@@ -4,7 +4,7 @@ import * as d3 from "d3";
 
 const Basics = () => {
     const [data, setData] = useState([25, 30, 45, 60, 20]);
-    const svgRef = useRef();
+    const svgRef = useRef<SVGSVGElement>(null);
 
     useEffect(() => {
         const svg = d3.select(svgRef.current);

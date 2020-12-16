@@ -1,6 +1,15 @@
 import React, { useEffect, useRef } from 'react';
-import chartData from '../data/candlestickChartData.json';
+import chartData from '../data/candlestickChartData';
 import * as d3 from 'd3';
+import { isNumber } from 'util';
+
+interface ChartData {
+  date: Date;
+  high: number;
+  low: number;
+  open: number;
+  close: number
+}
 
 const CandlestickChart = () => {
   const svgRef = useRef(null);
@@ -16,11 +25,11 @@ const CandlestickChart = () => {
     const formatDate = d3.utcFormat("%B %-d, %Y");
     const formatValue = d3.format(".2f");
     const f = d3.format("+.2%");
-    const formatChange = (y0, y1) => f((y1 - y0) / y0);
+    const formatChange = (y0: number, y1: number) => f((y1 - y0) / y0);
     const parseDate = d3.utcParse("%Y-%m-%d");
 
-    const data = chartData.map(({ date, high, low, open, close }) => ({
-      date: parseDate(date.slice(0, 10)),
+    const data: ChartData[] = chartData.map(({ date, high, low, open, close }) => ({
+      date: parseDate(date.slice(0, 10)) as Date,
       high,
       low,
       open,
@@ -29,35 +38,40 @@ const CandlestickChart = () => {
 
     // 주식 데이터 -> 주중에만 시장이 열리기 때문에 band scale을 사용
     // 각각의 주중이 domain
-    const xScale = d3.scaleBand()
-      .domain(d3.utcDay
-        // interval.range(start, top)
-        // : Returns an array of dates representing every interval boundary
-        // after or equal to start (inclusive) and before stop (exclusive)
-        // 마지막 날짜까지 포함시키기 위해서
-        .range(data[0].date, +data[data.length - 1].date + 1)
-        // 주중만을 포함하도록 filtering
-        .filter(d => d.getUTCDay() !== 0 && d.getUTCDay() !== 6))
+    const xDomain: any = d3.utcDay
+      // interval.range(start, top)
+      // : Returns an array of dates representing every interval boundary
+      // after or equal to start (inclusive) and before stop (exclusive)
+      // 마지막 날짜까지 포함시키기 위해서
+      .range(data[0].date, data[data.length - 1].date)
+      // 주중만을 포함하도록 filtering
+      .filter(d => d.getUTCDay() !== 0 && d.getUTCDay() !== 6)
+    const xScale: any = d3.scaleBand()
+      .domain(xDomain)
       .range([margin.left, width - margin.right])
       .padding(0.2)
 
-    const xAxis = d3.axisBottom(xScale)
-      .tickValues(d3.utcMonday
-        // graph width에 따라 날짜 간격을 다르게 설정(일주일마다, 이주일마다)
-        .every(width > 720 ? 1 : 2)
-        .range(data[0].date, data[data.length - 1].date))
-      .tickFormat(d3.utcFormat("%-m/%-d"))
+    // graph width에 따라 날짜 간격을 다르게 설정(일주일마다, 이주일마다)
+    const xTickValues: any = d3.utcMonday
+      .every(width > 720 ? 1 : 2)
+      ?.range(data[0].date, data[data.length - 1].date)
+    const tickFormat: any = d3.utcFormat("%-m/%-d");
+    const xAxis: any = d3.axisBottom(xScale)
+      .tickValues(xTickValues)
+      .tickFormat(tickFormat)
 
     svg.select('.x-axis')
       .call(xAxis)
       // x축 path 없애기
       .call(g => g.select('.domain').remove());
 
+    const minLow = d3.min(data, d => d.low) as number;
+    const maxHigh = d3.max(data, d => d.high) as number;
     const yScale = d3.scaleLog()
-      .domain([d3.min(data, d => d.low), d3.max(data, d => d.high)])
+      .domain([minLow, maxHigh])
       .rangeRound([height - margin.bottom, margin.top])
 
-    const yAxis = d3.axisLeft(yScale)
+    const yAxis: any = d3.axisLeft(yScale)
       .tickFormat(d3.format("$~f"))
 
     svg.select('.y-axis')

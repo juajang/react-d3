@@ -17,8 +17,8 @@ const Title = styled.h2`
 `;
 
 const ReactWithD3Basic = () => {
-  const refCircle = useRef();
-  const refCoordinate = useRef();
+  const refCircle = useRef<SVGSVGElement>(null);
+  const refCoordinate = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     const currentCircle = refCircle.current;

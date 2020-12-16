@@ -20,6 +20,11 @@ const Legend = styled.svg`
   font-size: 12px;
 `;
 
+interface DonutData {
+  label: string;
+  value: number;
+}
+
 const DonutChart = () => {
   const svgRef = useRef(null);
   const margin = {
@@ -34,21 +39,22 @@ const DonutChart = () => {
   const innerRadius = 170;
 
   const data = [
-    {"label":"ONE", "value":194},
-    {"label":"TWO", "value":567},
-    {"label":"THREE", "value":1314},
-    {"label":"FOUR", "value":793},
-    {"label":"FIVE", "value":1929},
-    {"label":"SIX", "value":1383}
+    {label:"ONE", value:194},
+    {label:"TWO", value:567},
+    {label:"THREE", value:1314},
+    {label:"FOUR", value:793},
+    {label:"FIVE", value:1929},
+    {label:"SIX", value:1383}
   ];
 
   const total = data.reduce((sum, current) => sum + current.value, 0);
 
+  const colorExtent = d3.extent(data, (data) => data.value) as [number, number];
   const colorScale = d3.scaleLinear()
-    .domain(d3.extent(data, (data) => data.value))
+    .domain(colorExtent)
     .range([0, 1])
 
-  const colored = (t) => d3.interpolatePuBu(colorScale(t));
+  const colored = (t: number) => d3.interpolatePuBu(colorScale(t));
 
   const arcLabel = () => {
     return d3.arc().innerRadius(innerRadius).outerRadius(radius);
@@ -72,17 +78,17 @@ const DonutChart = () => {
       .text(total + 'm')
       .attr('y', 10);
 
-    const arc = d3.arc()
+    const arc: any = d3.arc()
       .innerRadius(innerRadius)
       .outerRadius(radius);
 
-    const arcOver = d3.arc()
+    const arcOver: any = d3.arc()
       .innerRadius(innerRadius + 5)
       .outerRadius(radius + 5);
 
     // Compute the position of each group on the pie
-    const pie = d3.pie()
-      .value(d => d.value)
+    const pie: any = d3.pie()
+      .value((d: any) => d.value)
       .padAngle(0.01);
 
     // add pie
@@ -91,7 +97,7 @@ const DonutChart = () => {
       .selectAll(".slice")
       .data(pie(data))
       .join("path")
-        .attr('fill', d => colored(d.value))
+        .attr('fill', (d: any) => colored(d.value))
         .attr('d', arc)
         .on("mouseover", function() {
           d3.select(this)
@@ -99,9 +105,11 @@ const DonutChart = () => {
             .duration(200)
             .attr("d", arcOver)
           textTop
+            // @ts-ignore
             .text(d3.select(this).datum().data.label)
             .attr("y", -10)
           textBottom
+            // @ts-ignore
             .text(d3.select(this).datum().data.value + 'm')
             .attr("y", 10)
         })
@@ -118,13 +126,13 @@ const DonutChart = () => {
         })
       .transition()
       .duration(1000)
-      .attrTween('d', (d) => {
+      .attrTween('d', (d: any) => {
         // return an interpolater
         const interpolate = d3.interpolate({
           startAngle: 0,
           endAngle: 0
         }, d);
-        return function(t) {
+        return function(t: number) {
           return arc(interpolate(t));
         }
       })
@@ -139,8 +147,8 @@ const DonutChart = () => {
       .join("text")
         .transition()
         .duration(800)
-        .text((d) => d.data.label)
-        .attr("transform", d => `translate(${arcLabel().centroid(d)})`)
+        .text((d: any) => d.data.label)
+        .attr("transform", (d: any) => `translate(${arcLabel().centroid(d)})`)
         .attr("dy", "0.4em")
         .attr("text-anchor", "middle")
         .attr("fill", 'black')

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import indexChartData from '../data/indexChartData.json';
+import indexChartData from '../data/indexChartData';
 
 const IndexChart = () => {
   const svgRef = useRef(null);
@@ -15,7 +15,6 @@ const IndexChart = () => {
     const svg = d3.select(svgRef.current);
 
     const parseDate = d3.utcParse("%Y-%m-%d");
-    const formatDate = d3.utcFormat("%B, %Y")
 
     const data = indexChartData.map(({ name, date, value }) => ({
       name,
@@ -33,13 +32,17 @@ const IndexChart = () => {
       }))
     }));
 
+    const xDomain: any = d3.extent(data, d => d.date);
     const xScale = d3.scaleUtc()
-      .domain(d3.extent(data, d => d.date))
+      .domain(xDomain)
       .range([margin.left, width - margin.right])
       .clamp(true);
 
-    const k = d3.max(groups, ([_, group]) =>
-      d3.max(group, d => d.value) / d3.min(group, d => d.value));
+    const k: any = d3.max(groups, ([_, group]) => {
+      const maxValue: any = d3.max(group, d => d.value)
+      const minValue: any = d3.min(group, d => d.value);
+      return maxValue / minValue;
+    })
 
     const yScale = d3.scaleLog()
       .domain([1 / k, k])
@@ -48,7 +51,7 @@ const IndexChart = () => {
     const zScale = d3.scaleOrdinal(d3.schemeCategory10)
       .domain(data.map(d => d.name));
 
-    const xAxis = d3.axisBottom(xScale)
+    const xAxis: any = d3.axisBottom(xScale)
       .ticks(width / 80)
       .tickSizeOuter(0);
 
@@ -56,8 +59,8 @@ const IndexChart = () => {
       .call(xAxis)
       .call(g => g.select('.domain').remove());
 
-    const yAxis = d3.axisLeft(yScale)
-      .ticks(null, x => +x.toFixed(6) + 'x')
+    const yAxis: any = d3.axisLeft(yScale)
+      .ticks(null, (x: any) => +x.toFixed(6) + 'x')
 
     svg.select('.y-axis')
       .call(yAxis)
@@ -68,8 +71,8 @@ const IndexChart = () => {
       .call(g => g.select('.domain').remove())
 
     const line = d3.line()
-      .x(d => xScale(d.date))
-      .y(d => yScale(d.value))
+      .x((d: any) => xScale(d.date))
+      .y((d: any) => yScale(d.value))
 
     const rule = svg.append('g')
       .append('line')
@@ -89,7 +92,7 @@ const IndexChart = () => {
       .attr('stroke-linejoin', 'round')
       .attr('stroke-linecap', 'round')
       .attr('stroke', d => zScale(d.key))
-      .attr('d', d => line(d.values))
+      .attr('d', (d: any) => line(d.values))
 
     serie.append('text')
       .datum(d => ({
@@ -102,9 +105,9 @@ const IndexChart = () => {
       .text(d => d.key)
       .attr('fill', d => zScale(d.key))
 
-    const bisect = d3.bisector(d => d.date).left;
+    const bisect = d3.bisector((d: any) => d.date).left;
 
-    function update(date) {
+    function update(date: Date) {
       const roundedDate = d3.utcDay.round(date);
       rule.attr('transform', `translate(${xScale(roundedDate) + 0.5}, 0)`)
       serie.attr('transform', ({ values }) => {
@@ -119,10 +122,10 @@ const IndexChart = () => {
       .duration(1500)
       .tween('date', () => {
         const i = d3.interpolateDate(xScale.domain()[1], xScale.domain()[0]);
-        return date => update(i(date));
+        return (date: number) => update(i(date));
       })
 
-    function moved(event) {
+    function moved(this: any, event: any) {
       update(xScale.invert(d3.pointer(event, this)[0]));
       event.preventDefault();
     }
@@ -130,7 +133,7 @@ const IndexChart = () => {
     svg.on('mousemove touchmove', moved);
 
     update(xScale.domain()[0]);
-  }, [])
+  }, [margin.right, margin.left, margin.top, margin.bottom])
 
   return (
     <>
