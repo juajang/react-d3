@@ -1,7 +1,8 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import data from '../data/forceGraphData';
 import * as d3 from 'd3';
 import { d3Event, d3DragEventData } from '../types/types';
+import { select } from 'd3-selection';
 
 interface GraphData {
   id: string,
@@ -16,7 +17,7 @@ const ForceDirectedGraph = () => {
   const height = 680;
 
   useEffect(() => {
-    const svg: any = d3.select(svgRef.current);
+    const svg = select(svgRef.current);
 
     // 1. create a simulation for an array of nodes
     // 2. compose the desired forces
@@ -32,7 +33,7 @@ const ForceDirectedGraph = () => {
       .range(d3.schemeSet3);
 
     // 드래그 시뮬레이션
-    const drag = (simulation: any) => {
+    const drag: Function = (simulation: any) => {
       // d: node
       function dragStarted(event?: d3Event, d?: d3DragEventData) {
         // alpha: simulation이 시간이 지남에 따라 식혀지면서 (cool down) 줄어드는 값
@@ -109,7 +110,7 @@ const ForceDirectedGraph = () => {
       .data(nodes)
       .join('circle')
       .attr('r', 5)
-      .attr('fill', (d: GraphData) => colorScale(d.group))
+      .attr('fill', (d: GraphData) => colorScale(d.group) as string)
       // 드래그 이벤트들 추가
       .call(drag(simulation))
 

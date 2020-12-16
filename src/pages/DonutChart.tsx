@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import styled from 'styled-components';
+import { select, Selection } from 'd3-selection'
 import * as d3 from 'd3';
 
 const Donut = styled.svg`
@@ -26,7 +27,7 @@ interface DonutData {
 }
 
 const DonutChart = () => {
-  const svgRef = useRef(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
   const margin = {
     top: 20, right: 20, bottom: 50, left: 10
   }
@@ -99,18 +100,17 @@ const DonutChart = () => {
       .join("path")
         .attr('fill', (d: any) => colored(d.value))
         .attr('d', arc)
-        .on("mouseover", function() {
+        .on("mouseover", function(event) {
+          const currentTarget: any = d3.select(event.currentTarget);
           d3.select(this)
             .transition()
             .duration(200)
             .attr("d", arcOver)
           textTop
-            // @ts-ignore
-            .text(d3.select(this).datum().data.label)
+             .text(currentTarget.datum().data.label)
             .attr("y", -10)
           textBottom
-            // @ts-ignore
-            .text(d3.select(this).datum().data.value + 'm')
+            .text(currentTarget.datum().data.value + 'm')
             .attr("y", 10)
         })
         .on("mouseout", function() {

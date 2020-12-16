@@ -32,17 +32,17 @@ const IndexChart = () => {
       }))
     }));
 
-    const xDomain: any = d3.extent(data, d => d.date);
+    const xDomain = d3.extent(data, (d: any) => d.date) as [number, number];
     const xScale = d3.scaleUtc()
       .domain(xDomain)
       .range([margin.left, width - margin.right])
       .clamp(true);
 
-    const k: any = d3.max(groups, ([_, group]) => {
-      const maxValue: any = d3.max(group, d => d.value)
-      const minValue: any = d3.min(group, d => d.value);
+    const k = d3.max(groups, ([_, group]) => {
+      const maxValue = d3.max(group, d => d.value) as number;
+      const minValue = d3.min(group, d => d.value) as number;
       return maxValue / minValue;
-    })
+    }) as number;
 
     const yScale = d3.scaleLog()
       .domain([1 / k, k])

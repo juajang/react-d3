@@ -22,7 +22,7 @@ const Canvas = styled.div`
 
 const BarChart = () => {
   const ref = useRef<SVGGElement>(null);
-  const xAxisRef = useRef<SVGGElement>(null)
+  const xAxisRef = useRef<SVGGElement | null>(null)
   const yAxisRef = useRef<SVGGElement>(null)
 
   const margin = {
